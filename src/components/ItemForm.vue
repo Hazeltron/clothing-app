@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, reactive } from "vue";
+import { reactive } from "vue";
 import { useItemsStore } from "@/stores/stored-items";
 
 const store = useItemsStore();
@@ -26,20 +26,20 @@ function clear(){
 
 <template>
   <div class="store">
-    <h1>This is a store page</h1>
+    <h1 class="attention-voice">This is a store page</h1>
 
     <form @submit.prevent="save">
       <div class="field">
-        <label for="item">Add item:</label>
+        <label for="item" class="calm-voice">Add item:</label>
         <input type="text" id="item" v-model="items.item" />
       </div>
 
       <div class="field">
-        <label for="price">Add price:</label>
+        <label for="price" class="calm-voice">Add price:</label>
         <input type="number" id="price" v-model="items.price" />
       </div>
 
-      <button type="submit">Add Item</button>
+      <button type="submit" class="calm-voice">Add Item</button>
     </form>
 
     <ul>
