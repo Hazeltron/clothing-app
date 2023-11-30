@@ -4,7 +4,7 @@
 </script>
 
 <template>
-	<header>
+	<header class="site-header">
 		<inner-column>
 
 			<div class="wrapper">
@@ -16,7 +16,7 @@
 				</nav>
 
 			</div>
-			
+
 		</inner-column>
 	</header>
 
@@ -31,5 +31,12 @@
 </template>
 
 <style scoped>
-
+.site-header {
+	background-color: var(--paper);
+}
+nav {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+}
 </style>

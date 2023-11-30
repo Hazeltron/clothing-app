@@ -6,6 +6,11 @@
 @import './developer-styles.css';
 
 
+body {
+  background-color: var(--shadow);
+  color: var(--white);
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
@@ -15,6 +20,7 @@
 @media (min-width: 1024px) {
   body {
     display: flex;
+
   }
 
   /* #app {

@@ -7,6 +7,7 @@ body {
 
 main {
 	flex-grow: 1; /* fill up available space + push the footer down */
+	min-height: 100vh;
 }
 
 inner-column {
@@ -18,8 +19,8 @@ inner-column {
 	padding: 30px 14px; /* a loose default */
 }
 
-/*.site-header {
+.site-header {
 	position: sticky;
 	top: 0;
 	z-index: 5;
-}*/
+}
