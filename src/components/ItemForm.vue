@@ -39,7 +39,7 @@ function clear(){
         <input type="number" id="price" v-model="items.price" />
       </div>
 
-      <button type="submit" class="calm-voice">Add Item</button>
+      <button type="submit" class="add calm-voice">Add Item:</button>
     </form>
 
     <ul>
@@ -49,3 +49,38 @@ function clear(){
     </ul>
   </div>
 </template>
+
+<style>
+
+body {
+  background-color: var(--shadow);
+}
+.store {
+  display: grid;
+  gap: 30px;
+}
+
+form {
+  display: grid;
+  gap: 20px;
+}
+
+.field {
+  display: grid;
+  gap: 10px;
+}
+
+input {
+  max-width: 200px;
+  height: 2rem;
+}
+input:focus {
+  outline-color: var(--highlight);
+}
+.add {
+  max-width: 150px;
+  background-color: var(--white);
+  border-radius: 20px 20px;
+  padding: 0 20px;
+}
+</style>
