@@ -7,14 +7,16 @@ const store = useItemsStore();
 const items = reactive({
   item: "",
   price: "",
+  slug: ""
 });
 
 function save() {
-    const newObject = {
+    const enteredItems = {
         item: items.item,
         price: items.price,
+        slug: items.item
     };
-  store.add(newObject);
+  store.add(enteredItems);
   clear();
 }
 
@@ -44,7 +46,10 @@ function clear(){
 
     <ul>
         <li v-for="items in store.list">
-           {{ items.item}} ${{ items.price }}
+          <RouterLink :to="`item/${items.slug}`">
+            {{ items.item}} ${{ items.price }}
+          </RouterLink>  
+           
         </li>
     </ul>
   </div>
