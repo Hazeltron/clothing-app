@@ -4,9 +4,9 @@ import { defineStore } from 'pinia'
 export const useItemsStore = defineStore('items', function() {
     const list = reactive([
         {
-        item: "t-shirt", 
-        price: 200,
-        slug: "t-shirt"
+        item: "Disney World", 
+        price: 4000,
+        slug: "Disney World"
     }
     ]);
     function add(item){
