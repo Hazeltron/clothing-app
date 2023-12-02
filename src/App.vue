@@ -13,20 +13,20 @@ const route = useRoute();
     <inner-column>
       <div class="wrapper">
         <nav>
-          <RouterLink class="links" @click="ui.mainMenuClose" to="/"
+          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/store"
             >Home</RouterLink
           >
-          <RouterLink class="links" @click="ui.mainMenuClose" to="/about"
-            >About</RouterLink
+          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="home"
+            >Suitcases</RouterLink
           >
-          <RouterLink class="links" @click="ui.mainMenuClose" to="/store"
-            >Store</RouterLink
+          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/about"
+            >About</RouterLink
           >
 
           <button class="toggle" @click="ui.toggleMenu">Close</button>
         </nav>
 
-        <button class="toggle" @click="ui.toggleMenu"><svg class="icon-menu"><use xlink:href="#icon-menu"></use></svg> </button>
+        <button class="toggle add" @click="ui.toggleMenu"><svg class="icon-menu"><use xlink:href="#icon-menu"></use></svg> </button>
       </div>
     </inner-column>
   </header>
@@ -41,12 +41,27 @@ const route = useRoute();
 <style scoped>
 .site-header {
   background-color: var(--paper);
+  color: var(--white);
 }
 nav {
   display: flex;
   flex-direction: row;
   gap: 2rem;
 }
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+nav a{
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+
+
 
 .menu-closed nav {
   display: none;
@@ -64,17 +79,30 @@ nav {
   justify-content: center;
   width: 100%;
   height: 100vh;
-  background-color: var(--shadow);
+  background-color: var(--color);
+  color: var(--shadow);
+  opacity: .9;
 }
 
 .toggle {
 	display: block;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 
 @media (min-width: 800px) {
   .menu-closed nav {
     display: flex;
     flex: row;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
   }
 
   .menu-open nav {
