@@ -6,14 +6,15 @@
 @import './developer-styles.css';
 
 
-body {
-  background-color: var(--shadow);
-  color: var(--white);
+main {
+  background: var(--white);
+  color: var(--shadow);
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: var(--shadow);
+    color: var(--white);
   }
 }
 
