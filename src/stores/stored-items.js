@@ -9,9 +9,21 @@ export const useItemsStore = defineStore('items', function() {
         slug: "Disney World"
     }
     ]);
+
+    const detail = reactive([
+        {
+        location: "",
+        locationPrice: ""
+    }
+    ]);
+
     function add(item){
         list.push(item);
     }
 
-  return {list, add};
+    function addDetails(details){
+        detail.push(details);
+    }
+
+  return {list, detail, add, addDetails };
 });
