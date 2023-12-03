@@ -1,13 +1,38 @@
 <script setup>
+import { reactive } from "vue";
 import { useRoute } from "vue-router";
 import { useItemsStore } from "@/stores/stored-items.js";
 
 const route = useRoute();
-const product = useItemsStore();
+const store = useItemsStore();
 
-const newItem = product.list.find(function (enteredItems) {
+const details = reactive({
+  location: "",
+  locatePrice: ""
+});
+
+
+const newItem = store.list.find(function (enteredItems) {
   return enteredItems.slug == route.params.slug;
 });
+
+// function clear(){
+//     items.item =  "";
+//     items.price = "";
+// }
+
+
+function save() {
+    const enteredTripDetails = {
+        location: details.location,
+        locationPrice: details.locatePrice
+    };
+    console.log(enteredTripDetails);
+  store.addDetails(enteredTripDetails);
+  // clear();
+}
+
+
 </script>
 
 <template>
@@ -24,8 +49,17 @@ const newItem = product.list.find(function (enteredItems) {
 
       <div class="actions">
         <h2 class="attention-voice">Locations</h2>
-        <button class="button-trans"><svg class="icon-add"><use xlink:href="#icon-add"></use></svg></button>
+        
       </div>
+      <form @submit.prevent="save">
+        <field>
+          <input type="text" v-model="details.location">
+          <input type="number" v-model="details.locatePrice">
+        </field>
+        <button type="submit" class="button-trans"><svg class="icon-add"><use xlink:href="#icon-add"></use></svg></button>
+        
+      </form>
+
    
     </inner-column>
   </section>
@@ -35,7 +69,7 @@ const newItem = product.list.find(function (enteredItems) {
 
       <div class="actions">
         <h2 class="attention-voice">Activities</h2>
-        <button class="button-trans"><svg class="icon-add"><use xlink:href="#icon-add"></use></svg></button>
+        <button type="submit" class="button-trans"><svg class="icon-add"><use xlink:href="#icon-add"></use></svg></button>
       </div>
    
     </inner-column>
