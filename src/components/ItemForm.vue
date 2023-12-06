@@ -14,7 +14,10 @@ function save() {
     const enteredItems = {
         item: items.item,
         price: items.price,
-        slug: items.item
+        slug: items.item,
+        detail: [],
+        activities: [],
+        notes: []
     };
   store.add(enteredItems);
   clear();

@@ -1,12 +1,12 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useItemsStore } from "@/stores/stored-items.js";
 
 const route = useRoute();
 const store = useItemsStore();
 
-
+    
 
 const details = reactive({
   location: "",
@@ -27,6 +27,8 @@ const newItem = store.list.find(function (enteredItems) {
   return enteredItems.slug == route.params.slug;
 });
 
+
+
 function clear(){
     details.location =  "";
     details.locationPrice = "";
@@ -38,12 +40,17 @@ function clear(){
 function save() {
   const enteredTripDetails = {
     location: details.location,
-    locationPrice: details.locationPrice,
-    notes: details.notes,
+    locationPrice: details.locationPrice
   };
 
-  console.log(store.detail);
-  store.addDetails(enteredTripDetails);
+  const currentItem = store.list.find(function(item) {
+    return item.slug === newItem.slug;
+  });
+
+  if (currentItem) {
+    currentItem.detail.push(enteredTripDetails);
+  }
+
   clear();
 }
 
@@ -52,19 +59,29 @@ function saveActivity() {
     activity: activities.activity,
     activityPrice: activities.activityPrice,
   };
-  store.addActivity(enteredActivities);
+
+  const currentItem = store.list.find(function(item) {
+    return item.slug === newItem.slug;
+  });
+
+  if (currentItem) {
+    currentItem.activities.push(enteredActivities);
+  }
   clear();
-  console.log(store.activities);
-  console.log(store.costs);
+  
 }
 
 function saveNotes() {
   const enteredNotes = {
     note: notes.note
   };
-  store.addNote(enteredNotes);
+  const currentItem = store.list.find(function(item) {
+    return item.slug === newItem.slug;
+  });
+  if (currentItem) {
+    currentItem.notes.push(enteredNotes);
+  }
   clear();
-  console.log(store.notes);
 }
 
 function deleteDetail(index) {
@@ -79,6 +96,8 @@ function deleteNote(index) {
   store.deleteNote(index);
 }
 
+
+
 </script>
 
 <template>
@@ -89,6 +108,12 @@ function deleteNote(index) {
         <svg class="icon-suitcase"><use xlink:href="#icon-suitcase"></use></svg>
         for {{ newItem.slug }}
       </h1>
+      <code>
+        <pre>
+          {{ store.list }}
+        </pre>
+      </code>
+      
 
       <h2 class="attention-voice">Budget: ${{ store.costs }}</h2>
     </inner-column>
@@ -124,10 +149,15 @@ function deleteNote(index) {
       <ul class="output-container">
         <li
           class="calm-voice output"
-          v-for="(details, index) in store.detail"
+          v-for="(item, index) in newItem.detail"
           :key="index"
         >
-          {{ details.location }} ${{ details.locationPrice }}
+          <div>
+            {{ item.location }} ${{ item.locationPrice }}
+          </div>
+          
+  
+          
 
           <button @click="deleteDetail(index)">delete</button>
         </li>
@@ -165,10 +195,10 @@ function deleteNote(index) {
       <ul class="output-container">
         <li
           class="calm-voice output"
-          v-for="(activity, index) in store.activities"
+          v-for="(thing, index) in newItem.activities"
           :key="index"
         >
-          {{ activity.activity }} ${{ activity.activityPrice }}
+          {{ thing.activity }} ${{ thing.activityPrice }}
           <button @click="deleteActivity(index)">delete</button>
         </li>
       </ul>
@@ -193,11 +223,10 @@ function deleteNote(index) {
       <ul class="output-container">
         <li
           class="calm-voice output-for-notes"
-          v-for="(note, index) in store.notes"
-          :key="index"
+          v-for="(note, index) in newItem.notes"
         >
           {{ note.note }}
-          <button @click="deleteNote(index)">delete</button>
+          <!-- <button @click="deleteNote(index)">delete</button> -->
         </li>
       </ul>
     </inner-column>
