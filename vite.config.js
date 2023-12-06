@@ -7,7 +7,16 @@ import eslint from "@rollup/plugin-eslint"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+			template: {
+				compilerOptions: {
+					isCustomElement: function (element) {
+						const customElements = ["inner-column", "field"];
+						return customElements.includes(element);
+					},
+				},
+			},
+		}),
     {
       ...eslint({
         include: 'src/**/*.+(js)',

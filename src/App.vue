@@ -16,7 +16,7 @@ const route = useRoute();
           <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/store"
             >Home</RouterLink
           >
-          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="home"
+          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/"
             >Suitcases</RouterLink
           >
           <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/about"
