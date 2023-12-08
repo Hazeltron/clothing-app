@@ -6,8 +6,6 @@ import { useItemsStore } from "@/stores/stored-items.js";
 const route = useRoute();
 const store = useItemsStore();
 
-    
-
 const details = reactive({
   location: "",
   locatePrice: "",
@@ -19,31 +17,28 @@ const activities = reactive({
 });
 
 const notes = reactive({
-  note: ""
+  note: "",
 });
-
 
 const newItem = store.list.find(function (enteredItems) {
   return enteredItems.slug == route.params.slug;
 });
 
-
-
-function clear(){
-    details.location =  "";
-    details.locationPrice = "";
-    activities.activity = "";
-    activities.activityPrice = "";
-    notes.note = "";
+function clear() {
+  details.location = "";
+  details.locationPrice = "";
+  activities.activity = "";
+  activities.activityPrice = "";
+  notes.note = "";
 }
 
 function save() {
   const enteredTripDetails = {
     location: details.location,
-    locationPrice: details.locationPrice
+    locationPrice: details.locationPrice,
   };
 
-  const currentItem = store.list.find(function(item) {
+  const currentItem = store.list.find(function (item) {
     return item.slug === newItem.slug;
   });
 
@@ -60,7 +55,7 @@ function saveActivity() {
     activityPrice: activities.activityPrice,
   };
 
-  const currentItem = store.list.find(function(item) {
+  const currentItem = store.list.find(function (item) {
     return item.slug === newItem.slug;
   });
 
@@ -68,14 +63,13 @@ function saveActivity() {
     currentItem.activities.push(enteredActivities);
   }
   clear();
-  
 }
 
 function saveNotes() {
   const enteredNotes = {
-    note: notes.note
+    note: notes.note,
   };
-  const currentItem = store.list.find(function(item) {
+  const currentItem = store.list.find(function (item) {
     return item.slug === newItem.slug;
   });
   if (currentItem) {
@@ -84,20 +78,17 @@ function saveNotes() {
   clear();
 }
 
-function deleteDetail(index) {
-  store.deleteDetail(index);
+function deleteNote(noteIndex) {
+  store.deleteNote({ slug: route.params.slug, index: noteIndex });
 }
 
-function deleteActivity(index) {
-  store.deleteActivity(index);
+function deleteDetail(detailIndex) {
+  store.deleteDetail({ slug: route.params.slug, index: detailIndex });
 }
 
-function deleteNote(index) {
-  store.deleteNote(index);
+function deleteActivity(activityIndex) {
+  store.deleteActivity({ slug: route.params.slug, index: activityIndex });
 }
-
-
-
 </script>
 
 <template>
@@ -108,12 +99,11 @@ function deleteNote(index) {
         <svg class="icon-suitcase"><use xlink:href="#icon-suitcase"></use></svg>
         for {{ newItem.slug }}
       </h1>
-      <code>
+      <!-- <code>
         <pre>
           {{ store.list }}
         </pre>
-      </code>
-      
+      </code> -->
 
       <h2 class="attention-voice">Budget: ${{ store.costs }}</h2>
     </inner-column>
@@ -130,7 +120,9 @@ function deleteNote(index) {
         </div>
 
         <field class="detail-field">
-          <label for="location">Places to discover within {{ newItem.slug }}:</label>
+          <label for="location"
+            >Places to discover within {{ newItem.slug }}:</label
+          >
           <input
             required
             id="location"
@@ -152,12 +144,7 @@ function deleteNote(index) {
           v-for="(item, index) in newItem.detail"
           :key="index"
         >
-          <div>
-            {{ item.location }} ${{ item.locationPrice }}
-          </div>
-          
-  
-          
+          <div>{{ item.location }} ${{ item.locationPrice }}</div>
 
           <button @click="deleteDetail(index)">delete</button>
         </li>
@@ -223,10 +210,11 @@ function deleteNote(index) {
       <ul class="output-container">
         <li
           class="calm-voice output-for-notes"
-          v-for="(note, index) in newItem.notes"
+          v-for="(note, noteIndex) in newItem.notes"
+          :key="noteIndex"
         >
           {{ note.note }}
-          <!-- <button @click="deleteNote(index)">delete</button> -->
+          <button @click="deleteNote(noteIndex)">delete</button>
         </li>
       </ul>
     </inner-column>
@@ -255,7 +243,7 @@ input {
 }
 
 input:focus {
- outline-color: var(--highlight);
+  outline-color: var(--highlight);
 }
 
 .output-container {
@@ -265,7 +253,7 @@ input:focus {
 .output {
   display: flex;
   flex-direction: row;
-  align-items: center ;
+  align-items: center;
   justify-content: space-between;
   max-width: 200px;
   background-color: var(--white);
@@ -273,18 +261,17 @@ input:focus {
   padding: 10px;
   border: solid 1px var(--shadow);
   margin-top: 10px;
-  
 }
 
 .output:hover {
   background-color: var(--shadow);
-  color:  var(--white);
+  color: var(--white);
 }
 
 .output-for-notes {
   display: flex;
   flex-direction: row;
-  align-items: center ;
+  align-items: center;
   justify-content: space-between;
   max-width: 400px;
   background-color: var(--white);
@@ -292,12 +279,11 @@ input:focus {
   padding: 10px;
   border: solid 1px var(--shadow);
   margin-top: 10px;
-  
 }
 
 .output-for-notes:hover {
   background-color: var(--shadow);
-  color:  var(--white);
+  color: var(--white);
 }
 
 textarea {
