@@ -14,8 +14,6 @@ export const useItemsStore = defineStore("items", function () {
     },
   ]);
 
-  const newItem = ref(null);
-
   const costs = computed(function () {
     const route = useRoute();
     const selectedItem = list.find(function (item) {
