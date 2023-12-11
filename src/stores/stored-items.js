@@ -3,20 +3,20 @@ import { defineStore } from "pinia";
 import { useRoute } from "vue-router";
 
 export const useItemsStore = defineStore("items", function () {
-  const list = reactive([
+  const trips = reactive([
     {
       item: "Disney World",
       price: 4000,
       slug: "Disney World",
-      detail: [],
+      destination: [],
       activities: [],
       notes: [],
     },
   ]);
 
-  const costs = computed(function () {
+  const budget = computed(function () {
     const route = useRoute();
-    const selectedItem = list.find(function (item) {
+    const selectedItem = trips.find(function (item) {
       return item.slug === route.params.slug;
     });
 
@@ -24,12 +24,12 @@ export const useItemsStore = defineStore("items", function () {
       return 0;
     }
 
-    const listTotalPrice = selectedItem.price || 0;
-    const locationTotalPrice = selectedItem.detail.reduce(function (
+    const tripsTotalPrice = selectedItem.price || 0;
+    const locationTotalPrice = selectedItem.destination.reduce(function (
       total,
-      detail,
+      destination,
     ) {
-      return total + (detail.locationPrice || 0);
+      return total + (destination.locationPrice || 0);
     }, 0);
     const activityTotalPrice = selectedItem.activities.reduce(function (
       total,
@@ -38,43 +38,43 @@ export const useItemsStore = defineStore("items", function () {
       return total + (activity.activityPrice || 0);
     }, 0);
 
-    return listTotalPrice - locationTotalPrice - activityTotalPrice;
+    return tripsTotalPrice - locationTotalPrice - activityTotalPrice;
   });
 
   function add(item) {
-    list.push(item);
+    trips.push(item);
   }
 
-  function addDetails(details) {
-    list.push(details);
+  function addDestination(destinations) {
+    trips.push(destinations);
   }
 
   function addActivity(activity) {
-    list.push(activity);
+    trips.push(activity);
   }
 
   function addNote(note) {
-    list.push(note);
+    trips.push(note);
   }
 
   function deleteNote({ slug, index }) {
-    const currentItem = list.find((item) => item.slug === slug);
+    const currentItem = trips.find((item) => item.slug === slug);
 
     if (currentItem && currentItem.notes) {
       currentItem.notes.splice(index, 1);
     }
   }
 
-  function deleteDetail({ slug, index }) {
-    const currentItem = list.find((item) => item.slug === slug);
+  function deleteDestination({ slug, index }) {
+    const currentItem = trips.find((item) => item.slug === slug);
 
-    if (currentItem && currentItem.detail) {
-      currentItem.detail.splice(index, 1);
+    if (currentItem && currentItem.destination) {
+      currentItem.destination.splice(index, 1);
     }
   }
 
   function deleteActivity({ slug, index }) {
-    const currentItem = list.find((item) => item.slug === slug);
+    const currentItem = trips.find((item) => item.slug === slug);
 
     if (currentItem && currentItem.activities) {
       currentItem.activities.splice(index, 1);
@@ -82,12 +82,12 @@ export const useItemsStore = defineStore("items", function () {
   }
 
   return {
-    list,
-    costs,
+    trips,
+    budget,
     add,
-    addDetails,
+    addDestination,
     addActivity,
-    deleteDetail,
+    deleteDestination,
     deleteActivity,
     addNote,
     deleteNote,
