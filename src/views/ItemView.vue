@@ -1,12 +1,12 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive } from "vue";
 import { useRoute } from "vue-router";
 import { useItemsStore } from "@/stores/stored-items.js";
 
 const route = useRoute();
 const store = useItemsStore();
 
-const details = reactive({
+const destinations = reactive({
   location: "",
   locatePrice: "",
 });
@@ -20,30 +20,30 @@ const notes = reactive({
   note: "",
 });
 
-const newItem = store.list.find(function (enteredItems) {
-  return enteredItems.slug == route.params.slug;
+const newTrip = store.trips.find(function (enteredPlaces) {
+  return enteredPlaces.slug == route.params.slug;
 });
 
 function clear() {
-  details.location = "";
-  details.locationPrice = "";
+  destinations.location = "";
+  destinations.locationPrice = "";
   activities.activity = "";
   activities.activityPrice = "";
   notes.note = "";
 }
 
-function save() {
-  const enteredTripDetails = {
-    location: details.location,
-    locationPrice: details.locationPrice,
+function saveDestination() {
+  const enteredLocation = {
+    location: destinations.location,
+    locationPrice: destinations.locationPrice,
   };
 
-  const currentItem = store.list.find(function (item) {
-    return item.slug === newItem.slug;
+  const currentItem = store.trips.find(function (item) {
+    return item.slug === newTrip.slug;
   });
 
   if (currentItem) {
-    currentItem.detail.push(enteredTripDetails);
+    currentItem.destination.push(enteredLocation);
   }
 
   clear();
@@ -55,8 +55,8 @@ function saveActivity() {
     activityPrice: activities.activityPrice,
   };
 
-  const currentItem = store.list.find(function (item) {
-    return item.slug === newItem.slug;
+  const currentItem = store.trips.find(function (item) {
+    return item.slug === newTrip.slug;
   });
 
   if (currentItem) {
@@ -69,8 +69,8 @@ function saveNotes() {
   const enteredNotes = {
     note: notes.note,
   };
-  const currentItem = store.list.find(function (item) {
-    return item.slug === newItem.slug;
+  const currentItem = store.trips.find(function (item) {
+    return item.slug === newTrip.slug;
   });
   if (currentItem) {
     currentItem.notes.push(enteredNotes);
@@ -82,8 +82,8 @@ function deleteNote(noteIndex) {
   store.deleteNote({ slug: route.params.slug, index: noteIndex });
 }
 
-function deleteDetail(detailIndex) {
-  store.deleteDetail({ slug: route.params.slug, index: detailIndex });
+function deleteDestination(destinationIndex) {
+  store.deleteDestination({ slug: route.params.slug, index: destinationIndex });
 }
 
 function deleteActivity(activityIndex) {
@@ -97,21 +97,21 @@ function deleteActivity(activityIndex) {
       <h1 class="loud-voice">
         Your
         <svg class="icon-suitcase"><use xlink:href="#icon-suitcase"></use></svg>
-        for {{ newItem.slug }}
+        for {{ newTrip.slug }}
       </h1>
       <!-- <code>
         <pre>
-          {{ store.list }}
+          {{ store.trips }}
         </pre>
       </code> -->
 
-      <h2 class="attention-voice">Budget: ${{ store.costs }}</h2>
+      <h2 class="attention-voice">Budget: ${{ store.budget }}</h2>
     </inner-column>
   </section>
 
   <section>
     <inner-column>
-      <form @submit.prevent="save">
+      <form @submit.prevent="saveDestination">
         <div class="actions">
           <h2 class="attention-voice">Locations</h2>
           <button type="submit" class="button-trans">
@@ -119,21 +119,21 @@ function deleteActivity(activityIndex) {
           </button>
         </div>
 
-        <field class="detail-field">
+        <field class="destination-field">
           <label for="location"
-            >Places to discover within {{ newItem.slug }}:</label
+            >Places to discover within {{ newTrip.slug }}:</label
           >
           <input
             required
             id="location"
             type="text"
-            v-model="details.location"
+            v-model="destinations.location"
           />
           <label for="locationPrice">Estimated Cost:</label>
           <input
             id="locationPrice"
             type="number"
-            v-model="details.locationPrice"
+            v-model="destinations.locationPrice"
           />
         </field>
       </form>
@@ -141,12 +141,12 @@ function deleteActivity(activityIndex) {
       <ul class="output-container">
         <li
           class="calm-voice output"
-          v-for="(item, index) in newItem.detail"
+          v-for="(item, index) in newTrip.destination"
           :key="index"
         >
           <div>{{ item.location }} ${{ item.locationPrice }}</div>
 
-          <button @click="deleteDetail(index)">delete</button>
+          <button @click="deleteDestination(index)">delete</button>
         </li>
       </ul>
     </inner-column>
@@ -162,7 +162,7 @@ function deleteActivity(activityIndex) {
           </button>
         </div>
 
-        <field class="detail-field">
+        <field class="destination-field">
           <label for="activity">Add anything you'd like to do:</label>
           <input
             required
@@ -182,7 +182,7 @@ function deleteActivity(activityIndex) {
       <ul class="output-container">
         <li
           class="calm-voice output"
-          v-for="(thing, index) in newItem.activities"
+          v-for="(thing, index) in newTrip.activities"
           :key="index"
         >
           {{ thing.activity }} ${{ thing.activityPrice }}
@@ -202,7 +202,7 @@ function deleteActivity(activityIndex) {
           </button>
         </div>
 
-        <field class="detail-field">
+        <field class="destination-field">
           <textarea required v-model="notes.note"></textarea>
         </field>
       </form>
@@ -210,7 +210,7 @@ function deleteActivity(activityIndex) {
       <ul class="output-container">
         <li
           class="calm-voice output-for-notes"
-          v-for="(note, noteIndex) in newItem.notes"
+          v-for="(note, noteIndex) in newTrip.notes"
           :key="noteIndex"
         >
           {{ note.note }}
@@ -231,7 +231,7 @@ function deleteActivity(activityIndex) {
   align-items: center;
   gap: 10px;
 }
-.detail-field {
+.destination-field {
   display: grid;
   gap: 10px;
   margin-top: 20px;
