@@ -13,15 +13,13 @@ const route = useRoute();
     <inner-column>
       <div class="wrapper">
         <nav>
-          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/store"
+          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/"
             >Home</RouterLink
           >
-          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/"
-            >Suitcases</RouterLink
+          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/store"
+            >Store</RouterLink
           >
-          <RouterLink class="links calm-voice" @click="ui.mainMenuClose" to="/about"
-            >About</RouterLink
-          >
+          
 
           <button class="toggle" @click="ui.toggleMenu">Close</button>
         </nav>

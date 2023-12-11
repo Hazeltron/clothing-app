@@ -1,10 +1,10 @@
 <script setup>
-
+import ItemForm from "../components/ItemForm.vue";
 </script>
 
 <template>
     <inner-column>
-      <h1>Welcome Home</h1>
+      <ItemForm />
     </inner-column>
     
     

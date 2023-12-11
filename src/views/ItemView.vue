@@ -89,6 +89,9 @@ function deleteDestination(destinationIndex) {
 function deleteActivity(activityIndex) {
   store.deleteActivity({ slug: route.params.slug, index: activityIndex });
 }
+
+
+//something
 </script>
 
 <template>
