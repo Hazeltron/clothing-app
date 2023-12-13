@@ -4,7 +4,28 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Vite App</title>
+		<title>Peregrine</title>
+		<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArQHH4eCpnEsEdvcp-D-7JbVYfzCjZ9NM&callback=initMap&libraries=maps,marker&v=beta"></script>
+
+		<script>
+			function initMap() {
+				// Your map initialization code goes here
+				var map = new google.maps.Map(document.getElementById('map'), {
+					center: {lat: 21.06682777404785, lng: 105.81069946289062},
+					zoom: 14
+				});
+	
+				// Marker
+				var marker = new google.maps.Marker({
+					position: {lat: 21.06682777404785, lng: 105.81069946289062},
+					title: "My location",
+					map: map
+				});
+			}
+		</script>
+		
+
+		
 	</head>
 	<body>
 		<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
@@ -33,3 +54,6 @@
 		<script type="module" src="/src/main.js"></script>
 	</body>
 </html>
+
+
+<!-- AIzaSyArQHH4eCpnEsEdvcp-D-7JbVYfzCjZ9NM (GoogleMaps key) -->
