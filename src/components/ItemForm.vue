@@ -34,7 +34,7 @@ function clear(){
     
 
     <form @submit.prevent="save">
-      <h1 class="attention-voice">A World of Possibilities</h1>
+      <h1 class="attention-voice">Start Planning! 😃</h1>
       <div class="field">
         <label for="item" class="calm-voice">Where would you like to go?</label>
         <input required type="text" id="item" v-model="place.item" />
